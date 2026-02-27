@@ -1,7 +1,7 @@
 from knights import KNIGHTS
 from dataclasses import dataclass
 
-class Knights:
+class Knight:
     def __init__(self, name: str, power: int, hp: int) -> None:
         self.name = name
         self.power = power
@@ -9,8 +9,6 @@ class Knights:
 
     def __repr__(self) -> str:
         return f"name: {self.name}"
-
-
 
 
 
@@ -80,6 +78,10 @@ if __name__ == "__main__":
 
     weapon = Weapon.from_dict(KNIGHTS["arthur"]["weapon"])
     print (weapon)
+    
+    knight = Knight("brave_knight", 90, 25)
+    print(knight.__dict__)
+
 
 '''
 task: 
