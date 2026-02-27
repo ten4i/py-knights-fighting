@@ -1,7 +1,7 @@
 from knights import KNIGHTS
-from knights_stuff import Weapon
-from knights_stuff import Armour
-from knights_stuff import Potion
+from knights_models import Weapon
+from knights_models import Armour
+from knights_models import Potion
 
 def battle(knightsConfig):
     # BATTLE PREPARATIONS:

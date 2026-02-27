@@ -86,4 +86,4 @@ KNIGHTS = {
 }
 
 if __name__ == "__main__":
-    print (KNIGHTS["arthur"]["armour"][0]["part"]
+    print (KNIGHTS["arthur"]["armour"][0]["part"])
