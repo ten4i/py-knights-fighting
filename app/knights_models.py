@@ -1,15 +1,4 @@
-from knights import KNIGHTS
 from dataclasses import dataclass
-
-class Knight:
-    def __init__(self, name: str, power: int, hp: int) -> None:
-        self.name = name
-        self.power = power
-        self.hp = hp
-
-    def __repr__(self) -> str:
-        return f"name: {self.name}"
-
 
 
 class Weapon:
@@ -18,12 +7,12 @@ class Weapon:
         self.power = power
 
     def __repr__(self) -> str:
-        return  f"Weapon(name: '{self.name}', power: {self.power})"
+        return f"Weapon(name: '{self.name}', power: {self.power})"
 
     @classmethod
     def from_dict(cls, data: dict) -> "Weapon":
         return cls(name=data["name"], power=data["power"])
-    
+
 
 class Armour:
     def __init__(self, part: str, protection: int) -> None:
@@ -32,28 +21,28 @@ class Armour:
 
     def __repr__(self) -> str:
         return f"Armour(part: '{self.part}', protection: {self.protection})"
-   
+
     @classmethod
     def from_dict(cls, data: dict) -> "Armour":
-   
-        return cls(
-            part = data["part"],
-            protection = data["protection"]
-        )
+
+        return cls(part=data["part"], protection=data["protection"])
+
 
 @dataclass
 class Effect:
     power: int = 0
     hp: int = 0
     protection: int = 0
-    
+
     @classmethod
     def from_dict(cls, data: dict) -> "Effect":
         return cls(
-            power = data.get("power", 0), #missing keys = 0
-            hp = data.get("hp", 0),
-            protection = data.get("protection", 0)
+            power=data.get("power", 0),
+            hp=data.get("hp", 0),
+            protection=data.get("protection", 0),
         )
+
+
 @dataclass
 class Potion:
     name: str
@@ -65,30 +54,62 @@ class Potion:
             return None
         return cls(
             name=data["name"],
-            effect=Effect.from_dict(data.get("effect", {}))
+            effect=Effect.from_dict(data.get("effect", {})),
         )
 
-if __name__ == "__main__":
-    armours = [
-            Armour.from_dict(a)
-            for a in KNIGHTS["arthur"]["armour"]
-        ]
-    for a in armours:
-        print(a)
 
-    weapon = Weapon.from_dict(KNIGHTS["arthur"]["weapon"])
-    print (weapon)
-    
-    knight = Knight("brave_knight", 90, 25)
-    print(knight.__dict__)
+class Knight:
+    def __init__(
+        self,
+        name: str,
+        power: int,
+        hp: int,
+        weapon: str,
+        armour: str,
+        potion: Potion | None = None,
+    ) -> None:
 
+        self.name = name
+        self.power = power
+        self.hp = hp
+        self.weapon = weapon
+        self.armour = armour
+        self.potion = potion
 
-'''
-task: 
-    - create an obj from stuff
-    - create an obj from knights
+    def __repr__(self) -> str:
+        return f"name: {self.name}"
 
-    make 2 func: 
-        - preparing to the battle
-        - batle itself
-'''
+    @classmethod
+    def from_dict(cls, data: dict) -> "Knight":
+        weapon = Weapon.from_dict(data["weapon"])
+
+        armour = [Armour.from_dict(a) for a in (data.get("armour") or [])]
+
+        potion = Potion.from_dict(data.get("potion"))
+
+        return cls(
+            name=data["name"],
+            power=data["power"],
+            hp=data["hp"],
+            weapon=weapon,
+            armour=armour,
+            potion=potion,
+        )
+
+    def get_protection(self) -> int:
+        protection = sum(a.protection for a in (self.armour or []))
+        if self.potion:
+            protection += self.potion.effect.protection
+        return protection
+
+    def get_power(self) -> int:
+        power = self.power + self.weapon.power
+        if self.potion:
+            power += self.potion.effect.power
+        return power
+
+    def get_hp(self) -> int:
+        hp = self.hp
+        if self.potion:
+            hp += self.potion.effect.hp
+        return hp

@@ -1,5 +1,5 @@
 KNIGHTS = {
-     "lancelot": {
+    "lancelot": {
         "name": "Lancelot",
         "power": 35,
         "hp": 100,
@@ -26,7 +26,7 @@ KNIGHTS = {
             {
                 "part": "boots",
                 "protection": 10,
-            }
+            },
         ],
         "weapon": {
             "name": "Two-handed Sword",
@@ -46,7 +46,7 @@ KNIGHTS = {
             {
                 "part": "boots",
                 "protection": 10,
-            }
+            },
         ],
         "weapon": {
             "name": "Poisoned Sword",
@@ -58,8 +58,8 @@ KNIGHTS = {
                 "power": +15,
                 "hp": -5,
                 "protection": +10,
-            }
-        }
+            },
+        },
     },
     "red_knight": {
         "name": "Red Knight",
@@ -71,19 +71,13 @@ KNIGHTS = {
                 "protection": 25,
             }
         ],
-        "weapon": {
-            "name": "Sword",
-            "power": 45
-        },
+        "weapon": {"name": "Sword", "power": 45},
         "potion": {
             "name": "Blessing",
             "effect": {
                 "hp": +10,
                 "power": +5,
-            }
-        }
-    }
+            },
+        },
+    },
 }
-
-if __name__ == "__main__":
-    print (KNIGHTS["arthur"]["armour"][0]["part"])
