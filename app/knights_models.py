@@ -7,7 +7,7 @@ class Weapon:
         self.power = power
 
     def __repr__(self) -> str:
-        return f"Weapon(name: '{self.name}', power: {self.power})"
+        return f'Weapon(name: "{self.name}", power: {self.power})'
 
     @classmethod
     def from_dict(cls, data: dict) -> "Weapon":
@@ -65,7 +65,7 @@ class Knight:
         power: int,
         hp: int,
         weapon: Weapon,
-        armour: list[armour],
+        armour: list[Armour],
         potion: Potion | None = None,
     ) -> None:
 
